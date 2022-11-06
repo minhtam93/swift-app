@@ -27,5 +27,10 @@ struct Constants {
         static let WARNING_NAME = "名前を入力してください"
         static let WARNING_NUMBER_1 = "0〜200まで入力してください。"
     }
+    
+    struct SortBy {
+        static let USER_ID_LOW_TO_HIGHT = "User Id: Low to Hight"
+        static let USER_ID_HIGHT_TO_LOW = "User Id: Hight to Low"
+    }
 
 }

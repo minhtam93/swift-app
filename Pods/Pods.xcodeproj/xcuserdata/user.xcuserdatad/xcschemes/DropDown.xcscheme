@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "005A10F634BC6B80A8CCBFEC2DEA6082"
-               BuildableName = "Pods_userManagement.framework"
-               BlueprintName = "Pods-userManagement"
+               BlueprintIdentifier = "E9F9401E9C74C0C393164FD8D86D0068"
+               BuildableName = "DropDown.framework"
+               BlueprintName = "DropDown"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

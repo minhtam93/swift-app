@@ -6,28 +6,38 @@
 //
 
 import UIKit
+import DropDown
 
 class UserListViewController: UIViewController {
 
+    @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var vwDropDown: UIView!
+    @IBOutlet weak var labelDropDown: UILabel!
     //変数の宣言
     var selectedItem: User?
     var users = Array<User>()
     //databseに接続
     let db = DBService.shared
     
+    //dropdown
+    let dropDown = DropDown()
+    let dropDownValues = [Constants.SortBy.USER_ID_LOW_TO_HIGHT,Constants.SortBy.USER_ID_HIGHT_TO_LOW]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         
-        //data dummy
-        db.insertData(userID: 1, name: "Mai", age: 20)
-        db.insertData(userID: 2, name: "Hanh", age: 25)
-        db.insertData(userID: 3, name: "Ha", age: 30)
-        db.insertData(userID: 4, name: "Hong", age: 35)
-        db.insertData(userID: 5, name: "Huyen", age: 40)
-        
+//        //data dummy
+//        db.insertData(name: "Mai", age: 20)
+//        db.insertData(name: "Hanh", age: 25)
+//        db.insertData(name: "Ha", age: 30)
+//        db.insertData(name: "Hong", age: 35)
+//        db.insertData(name: "Huyen", age: 40)
+        initDropDown()
         //data取得
         getData()
     }
@@ -39,6 +49,9 @@ class UserListViewController: UIViewController {
         //値の設定
             nextView?.argString = selectedItem
         }
+        if segue.identifier == "NewUser" {
+            let nextPopupView = segue.destination as? NewUserViewController
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,7 +59,33 @@ class UserListViewController: UIViewController {
         tableView.reloadData()
     }
     private func getData() {
-        users = DBService.shared.getUser()
+        users = DBService.shared.getUser(statusFilter: "")
+    }
+    
+    private func initDropDown() {
+        dropDown.anchorView = vwDropDown
+        dropDown.dataSource = dropDownValues
+        dropDown.direction = .bottom
+        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            labelDropDown.text = dropDownValues[index]
+            let lblValue = labelDropDown.text
+            switch lblValue {
+            case Constants.SortBy.USER_ID_HIGHT_TO_LOW:
+                users = DBService.shared.getUser(statusFilter: "Descending")
+            default:
+                users = DBService.shared.getUser(statusFilter: "")
+            }
+            tableView.reloadData()
+        }
+    }
+    
+    @IBAction func dropDownPressed(_ sender: UIButton) {
+        dropDown.show()
+        
+    }
+    
+    @IBAction func popupPressed(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "NewUser", sender: nil)
     }
 }
 
@@ -70,9 +109,14 @@ extension UserListViewController: UITableViewDataSource {
     //テーブルのデータを表示する
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //cel 内容の取得
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.IDENTIFIRER_TABLEVIEW_LISTPAGE, for: indexPath)
-        cell.textLabel?.text = users[indexPath.row].name
-        cell.detailTextLabel?.text = users[indexPath.row].age.description
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.IDENTIFIRER_TABLEVIEW_LISTPAGE, for: indexPath) as! CustomTableViewCell
+        let item = users[indexPath.row]
+//        cell.textLabel?.text = item.name
+        cell.label.text = item.name
+//        cell.detailTextLabel?.text = item.age.description
+        let docDir = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let imageURL = docDir.appendingPathComponent(item.mediaName)
+        cell.iconImageView.image = UIImage(contentsOfFile: imageURL.path)!
         return cell
     }
 }

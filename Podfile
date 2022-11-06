@@ -7,5 +7,6 @@ target 'userManagement' do
 
   # Pods for userManagement
   pod 'SQLite.swift', '~> 0.13.3'
+  pod 'DropDown', '2.3.13'
 
 end

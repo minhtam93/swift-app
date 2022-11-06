@@ -8,6 +8,7 @@
 import Foundation
 import SQLite3
 import CoreVideo
+import SQLite
 
 //SQLiteのDBファイル名を定義
 //let dbfile = "DB.sqlite"
@@ -57,7 +58,8 @@ final class DBService {
             CREATE TABLE IF NOT EXISTS users (
             user_id INTEGER NOT NULL PRIMARY KEY,
             name TEXT NOT NULL,
-            age INTEGER NULL
+            age INTEGER NULL,
+            media_path TEXT
         );
         """
         //ステートメントハンドル用変数の定義
@@ -78,16 +80,18 @@ final class DBService {
     }
     
     //データ挿入
-    func insertData(userID:Int, name: String!, age:Int) {
+    func insertData(name: String!, age:Int, media: String) {
         var statement: OpaquePointer?
-        let users = getUser()
-        for i in users {
-            if i.userID == userID {
-                return
-            }
-        }
-        print(name!)
-        let insertStatementString = "INSERT INTO users (user_id, name, age) VALUES (?, ?, ?);"
+        let users = getUser(statusFilter: "")
+//        for i in users {
+//            if i.userID == userID {
+//                return
+//            }
+//        }
+        let userID = users.count + 1
+        print(userID)
+        
+        let insertStatementString = "INSERT INTO users (user_id, name, age, media_path) VALUES (?, ?, ?, ?);"
         if sqlite3_prepare_v2(db, insertStatementString, -1, &statement, nil) != SQLITE_OK {
             print("db error: \(getDBErrorMss(db))")
             return
@@ -96,6 +100,9 @@ final class DBService {
         sqlite3_bind_int(statement, 1, Int32(userID))
         sqlite3_bind_text(statement, 2, (name as NSString).utf8String, -1, nil)
         sqlite3_bind_int(statement, 3, Int32(age))
+        sqlite3_bind_text(statement, 4, media, -1, nil)
+//
+//        sqlite3_bind_blob(statement, 4, media.bytes, Int32(media.length), SQLITE_TRANSIENT)
 
         if sqlite3_step(statement) != SQLITE_DONE {
             print("db error: \(getDBErrorMss(db))")
@@ -107,10 +114,16 @@ final class DBService {
     }
 
     // データ取得
-    func getUser() -> [User] {
+    func getUser(statusFilter: String) -> [User] {
         var user: [User] = []
         var queryStatement: OpaquePointer?
-        let queryStatementString = "SELECT * FROM users"
+        var queryStatementString = "SELECT * FROM users"
+        switch statusFilter {
+            case "Descending":
+                queryStatementString = "SELECT * FROM users ORDER BY user_id DESC;"
+            default:
+                queryStatementString = "SELECT * FROM users"
+        }
         // クエリを準備する
         if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) != SQLITE_OK {
             print("db error: \(getDBErrorMss(db))")
@@ -126,9 +139,11 @@ final class DBService {
                 } else {
                     age = Int(sqlite3_column_int(queryStatement, 2))
                 }
-                user.append(User(userId: Int(userId), name: name, age: age!))
+                let media = String(describing: String(cString: sqlite3_column_text(queryStatement, 3)))
+                user.append(User(userId: Int(userId), name: name, age: age!, mediaName: media))
                 record = sqlite3_step(queryStatement)
         }
+        print(user)
         sqlite3_finalize(queryStatement)
         return user
     }

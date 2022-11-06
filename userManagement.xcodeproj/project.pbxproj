@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C2E97FE60A1154C04060D25E /* Pods_userManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DE767A79210D21D1E991CA5 /* Pods_userManagement.framework */; };
+		CE664B2C2913D53900014D87 /* CustomUITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE664B2B2913D53900014D87 /* CustomUITableView.swift */; };
 		CE951DB8290783760035C34A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE951DB7290783760035C34A /* Constants.swift */; };
 		CEBCC9952904B15F00150BE4 /* DBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBCC9942904B15F00150BE4 /* DBService.swift */; };
 		CEC695A62902859100623296 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC695A52902859100623296 /* AppDelegate.swift */; };
@@ -19,12 +20,14 @@
 		CEC695BB29028AB400623296 /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC695BA29028AB400623296 /* UserListViewController.swift */; };
 		CEC695BD29028ACA00623296 /* UserDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC695BC29028ACA00623296 /* UserDetailViewController.swift */; };
 		CEDBC98E2903E50900CFE406 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDBC98D2903E50900CFE406 /* UserModel.swift */; };
+		CEE1CBEA290CED0D007123C1 /* NewUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE1CBE9290CED0D007123C1 /* NewUserViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1DE767A79210D21D1E991CA5 /* Pods_userManagement.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_userManagement.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		371B1BCAE28C03C2813506AF /* Pods-userManagement.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-userManagement.debug.xcconfig"; path = "Target Support Files/Pods-userManagement/Pods-userManagement.debug.xcconfig"; sourceTree = "<group>"; };
 		7394BDD64D8D493ED4EE1FFF /* Pods-userManagement.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-userManagement.release.xcconfig"; path = "Target Support Files/Pods-userManagement/Pods-userManagement.release.xcconfig"; sourceTree = "<group>"; };
+		CE664B2B2913D53900014D87 /* CustomUITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUITableView.swift; sourceTree = "<group>"; };
 		CE951DB7290783760035C34A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CEBCC9942904B15F00150BE4 /* DBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBService.swift; sourceTree = "<group>"; };
 		CEC695A22902859100623296 /* userManagement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = userManagement.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -38,6 +41,7 @@
 		CEC695BA29028AB400623296 /* UserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
 		CEC695BC29028ACA00623296 /* UserDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewController.swift; sourceTree = "<group>"; };
 		CEDBC98D2903E50900CFE406 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		CEE1CBE9290CED0D007123C1 /* NewUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,14 @@
 				1DE767A79210D21D1E991CA5 /* Pods_userManagement.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CE664B2A2913D4F300014D87 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				CE664B2B2913D53900014D87 /* CustomUITableView.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		CEBCC9932904B12300150BE4 /* SqliteDatabase */ = {
@@ -96,6 +108,7 @@
 				CEDBC98C2903E4DF00CFE406 /* Model */,
 				CEC695BE29028ADC00623296 /* Views */,
 				CEC695B929028A6100623296 /* Controllers */,
+				CE664B2A2913D4F300014D87 /* Extension */,
 				CEC695AE2902859400623296 /* Assets.xcassets */,
 				CE951DB7290783760035C34A /* Constants.swift */,
 				CEC695B32902859400623296 /* Info.plist */,
@@ -107,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				CEC695A92902859100623296 /* HomeViewController.swift */,
+				CEE1CBE9290CED0D007123C1 /* NewUserViewController.swift */,
 				CEC695BA29028AB400623296 /* UserListViewController.swift */,
 				CEC695BC29028ACA00623296 /* UserDetailViewController.swift */,
 			);
@@ -254,11 +268,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE664B2C2913D53900014D87 /* CustomUITableView.swift in Sources */,
 				CEC695AA2902859100623296 /* HomeViewController.swift in Sources */,
 				CEC695BD29028ACA00623296 /* UserDetailViewController.swift in Sources */,
 				CEC695BB29028AB400623296 /* UserListViewController.swift in Sources */,
 				CEC695A62902859100623296 /* AppDelegate.swift in Sources */,
 				CEDBC98E2903E50900CFE406 /* UserModel.swift in Sources */,
+				CEE1CBEA290CED0D007123C1 /* NewUserViewController.swift in Sources */,
 				CEC695A82902859100623296 /* SceneDelegate.swift in Sources */,
 				CEBCC9952904B15F00150BE4 /* DBService.swift in Sources */,
 				CE951DB8290783760035C34A /* Constants.swift in Sources */,

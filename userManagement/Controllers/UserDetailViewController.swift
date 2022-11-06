@@ -11,6 +11,8 @@ class UserDetailViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var ageTextField: UITextField!
@@ -19,6 +21,7 @@ class UserDetailViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setInitView()
+        
     }
     private func setInitView() {
         //　 入力フィールド　ー　年齢
@@ -29,6 +32,8 @@ class UserDetailViewController: UIViewController, UITextFieldDelegate {
         nameTextField.isEnabled = false
         
         saveButton.isEnabled = false
+        cancelButton.isEnabled = false
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,6 +41,9 @@ class UserDetailViewController: UIViewController, UITextFieldDelegate {
         //受け取って値を代入
         nameTextField.text = argString?.name
         ageTextField.text = String(describing: argString!.age)
+        let docDir = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let imageURL = docDir.appendingPathComponent(argString?.mediaName ?? "")
+        photoImageView.image = UIImage(contentsOfFile: imageURL.path)
     }
     
     @IBAction func editPressed(_ sender: UIButton) {
@@ -43,6 +51,7 @@ class UserDetailViewController: UIViewController, UITextFieldDelegate {
         nameTextField.isEnabled = true
         nameTextField.becomeFirstResponder()
         saveButton.isEnabled = true
+        cancelButton.isEnabled = true
     }
     
     @IBAction func savePressed(_ sender: UIButton) {
@@ -80,10 +89,10 @@ class UserDetailViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func cancelPressed(_ sender: UIButton) {
-        ageTextField.isEnabled = false
-        nameTextField.isEnabled = false
         nameTextField.text = argString?.name
         ageTextField.text = String(describing: argString!.age)
+        nameTextField.isEnabled = false
+        ageTextField.isEnabled = false
     }
     
     func showAlert(title: String, messenger: String) {

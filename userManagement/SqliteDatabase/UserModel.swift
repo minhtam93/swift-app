@@ -12,11 +12,13 @@ struct User {
     var userID: Int
     var name: String
     var age: Int
+    var mediaName: String
     
-    init(userId: Int, name: String, age: Int) {
+    init(userId: Int, name: String, age: Int, mediaName: String) {
         self.userID = userId
         self.name = name
         self.age = age
+        self.mediaName = mediaName
     }
 }
 
